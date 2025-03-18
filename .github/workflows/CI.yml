@@ -125,7 +125,7 @@ jobs:
 
     - name: Upload package
       if: ${{ matrix.build == 'meson' && matrix.build-type != 'coverage' }}
-      uses: actions/upload-artifact@v2
+      uses: echapmanFromBunnings/upload-artifact@3.0.0
       with:
         name: ${{ env.MINPACK_OUTPUT }}
         path: ${{ env.MINPACK_OUTPUT }}
@@ -207,7 +207,7 @@ jobs:
         DOWNLOAD: "https://github.com/brechtsanders/winlibs_mingw/releases/download/10.3.0-12.0.0-9.0.0-r2/winlibs-x86_64-posix-seh-gcc-10.3.0-mingw-w64-9.0.0-r2.zip"
 
     - name: Download package
-      uses: actions/download-artifact@v2
+      uses: aochmann/actions-download-artifact@1.0.4
       with:
         name: ${{ env.MINPACK_OUTPUT }}
 

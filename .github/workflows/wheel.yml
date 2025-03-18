@@ -17,7 +17,7 @@ jobs:
     - run: |
         pipx run build . --sdist
       working-directory: python
-    - uses: actions/upload-artifact@v3
+    - uses: echapmanFromBunnings/upload-artifact@3.0.0
       with:
         name: minpack-python-sdist
         path: python/dist/*.tar.gz
@@ -58,7 +58,7 @@ jobs:
         unzip
         wheel
     - name: Download sdist
-      uses: actions/download-artifact@v2
+      uses: aochmann/actions-download-artifact@1.0.4
       with:
         name: minpack-python-sdist
     - name: Build wheel
@@ -72,7 +72,7 @@ jobs:
         rm minpack-*/dist/*-linux_x86_64.whl
       env:
         plat: manylinux${{ matrix.python == '3.6' && '2010' || '_2_12' }}_x86_64
-    - uses: actions/upload-artifact@v3
+    - uses: echapmanFromBunnings/upload-artifact@3.0.0
       with:
         name: minpack-python-${{ matrix.python }}
         path: minpack-*/dist/*.whl
