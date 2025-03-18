@@ -27,14 +27,14 @@ jobs:
       FPM_CC: gcc
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4.2.2
       with:
         submodules: recursive
 
     - name: Cache GFortran install
       if: ${{ contains(matrix.os, 'windows') }}
       id: cache
-      uses: actions/cache@v2
+      uses: actions/cache@v4.2.2
       with:
         path: ./mingw-w64
         key: gcc-${{ matrix.gcc }}-${{ matrix.os }}
@@ -164,12 +164,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4.2.2
 
     - name: Cache GFortran install
       if: ${{ contains(matrix.os, 'windows') }}
       id: cache
-      uses: actions/cache@v2
+      uses: actions/cache@v4.2.2
       with:
         path: ./mingw-w64
         key: gcc-${{ matrix.gcc }}-${{ matrix.os }}
@@ -265,7 +265,7 @@ jobs:
         DEPLOY_BRANCH: ${{ secrets.DEPLOY_BRANCH && contains(github.ref, secrets.DEPLOY_BRANCH) && 1 || 0 }}
 
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4.2.2
       with:
         submodules: recursive
 
