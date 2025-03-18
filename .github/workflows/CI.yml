@@ -125,14 +125,14 @@ jobs:
 
     - name: Upload package
       if: ${{ matrix.build == 'meson' && matrix.build-type != 'coverage' }}
-      uses: echapmanFromBunnings/upload-artifact@3.0.0
+      uses: actions/upload-artifact@v4.6.1
       with:
         name: ${{ env.MINPACK_OUTPUT }}
         path: ${{ env.MINPACK_OUTPUT }}
 
     - name: Upload coverage report
       if: ${{ matrix.build-type == 'coverage' }}
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v5.4.0
 
 
   Python:
@@ -207,7 +207,7 @@ jobs:
         DOWNLOAD: "https://github.com/brechtsanders/winlibs_mingw/releases/download/10.3.0-12.0.0-9.0.0-r2/winlibs-x86_64-posix-seh-gcc-10.3.0-mingw-w64-9.0.0-r2.zip"
 
     - name: Download package
-      uses: aochmann/actions-download-artifact@1.0.4
+      uses: actions/download-artifact@v4.2.0
       with:
         name: ${{ env.MINPACK_OUTPUT }}
 
@@ -249,7 +249,7 @@ jobs:
         DYLD_LIBRARY_PATH: ${{ env.DYLD_LIBRARY_PATH }}:${{ env.MINPACK_PREFIX }}/lib
 
     - name: Upload coverage report
-      uses: codecov/codecov-action@v2
+      uses: codecov/codecov-action@v5.4.0
 
 
   Docs:
