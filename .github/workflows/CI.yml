@@ -279,7 +279,8 @@ jobs:
 
     - name: Deploy Documentation
       if: ${{ github.event_name == 'push' && steps.deploy-on-push.outputs.result != 0 }}
-      uses: JamesIves/github-pages-deploy-action@4.1.0
+      uses: JamesIves/github-pages-deploy-action@v4.7.3
       with:
         branch: gh-pages # The branch the action should deploy to.
         folder: doc  # The folder the action should deploy.
+        single-commit: true
