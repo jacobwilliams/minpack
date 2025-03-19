@@ -9,12 +9,12 @@ jobs:
       matrix:
         build: [fpm, meson]
         os: [ubuntu-latest, macos-latest, windows-latest]
-        gcc: [10] # Version of GFortran we want to use.
+        gcc: [14] # Version of GFortran we want to use.
         build-type: [debug]
         include:
           - build: meson
             os: ubuntu-latest
-            gcc: 10
+            gcc: 14
             build-type: coverage
 
     defaults:
@@ -50,7 +50,7 @@ jobs:
       if: ${{ contains(matrix.os, 'ubuntu') }}
       run: |
         sudo update-alternatives \
-          --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 100 \
+          --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 140 \
           --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${{ matrix.gcc }} \
           --slave /usr/bin/gcov gcov /usr/bin/gcov-${{ matrix.gcc }}
 
@@ -62,14 +62,13 @@ jobs:
         echo "$pwd\mingw-w64\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       shell: pwsh
       env:
-        DOWNLOAD: "https://github.com/brechtsanders/winlibs_mingw/releases/download/10.3.0-12.0.0-9.0.0-r2/winlibs-x86_64-posix-seh-gcc-10.3.0-mingw-w64-9.0.0-r2.zip"
+        DOWNLOAD: "https://github.com/brechtsanders/winlibs_mingw/releases/download/14.2.0win32-12.0.0-msvcrt-r1/winlibs-x86_64-win32-seh-gcc-14.2.0-mingw-w64msvcrt-12.0.0-r1.zip"
 
     - name: Install dependencies
-      uses: mamba-org/provision-with-micromamba@main
+      uses: mamba-org/setup-micromamba@v2.0.4
       with:
         environment-file: config/ci/${{ matrix.build }}-env.yaml
-        extra-specs: |
-          ${{ matrix.build-type == 'coverage' && 'gcovr' || '' }}
+        create-args: ${{ matrix.build-type == 'coverage' && 'gcovr' || '' }}
 
     - name: Compile (fpm)
       if: ${{ matrix.build == 'fpm' }}
@@ -147,15 +146,15 @@ jobs:
       matrix:
         build: [meson]
         os: [ubuntu-latest, macos-latest]
-        gcc: [10]
-        python: ['3.7', '3.8', '3.9']
+        gcc: [14]
+        python: ['3.10', '3.11', '3.12']
 
         # Additional test for setuptools build
         include:
         - build: setuptools
           os: ubuntu-latest
-          gcc: 10
-          python: '3.9'
+          gcc: 14
+          python: '3.12'
 
     env:
       FC: gfortran
@@ -175,11 +174,10 @@ jobs:
         key: gcc-${{ matrix.gcc }}-${{ matrix.os }}
 
     - name: Install dependencies
-      uses: mamba-org/provision-with-micromamba@main
+      uses: mamba-org/setup-micromamba@v2.0.4
       with:
         environment-file: config/ci/python-env.yaml
-        extra-specs: |
-          python=${{ matrix.python }}
+        create-args: python=${{ matrix.python }}
 
     - name: Install GFortran (MacOS)
       if: ${{ contains(matrix.os, 'macos') }}
@@ -192,7 +190,7 @@ jobs:
       if: ${{ contains(matrix.os, 'ubuntu') }}
       run: |
         sudo update-alternatives \
-          --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 100 \
+          --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 140 \
           --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${{ matrix.gcc }} \
           --slave /usr/bin/gcov gcov /usr/bin/gcov-${{ matrix.gcc }}
 
@@ -204,7 +202,7 @@ jobs:
         echo "$pwd\mingw-w64\mingw64\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       shell: pwsh
       env:
-        DOWNLOAD: "https://github.com/brechtsanders/winlibs_mingw/releases/download/10.3.0-12.0.0-9.0.0-r2/winlibs-x86_64-posix-seh-gcc-10.3.0-mingw-w64-9.0.0-r2.zip"
+        DOWNLOAD: "https://github.com/brechtsanders/winlibs_mingw/releases/download/14.2.0win32-12.0.0-msvcrt-r1/winlibs-x86_64-win32-seh-gcc-14.2.0-mingw-w64msvcrt-12.0.0-r1.zip"
 
     - name: Download package
       uses: actions/download-artifact@v4.2.0
@@ -270,7 +268,7 @@ jobs:
         submodules: recursive
 
     - name: Install dependencies
-      uses: mamba-org/provision-with-micromamba@main
+      uses: mamba-org/setup-micromamba@v2.0.4
       with:
         environment-file: config/ci/docs-env.yaml
 
