@@ -50,7 +50,7 @@ jobs:
       if: ${{ contains(matrix.os, 'ubuntu') }}
       run: |
         sudo update-alternatives \
-          --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 140 \
+          --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 100 \
           --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${{ matrix.gcc }} \
           --slave /usr/bin/gcov gcov /usr/bin/gcov-${{ matrix.gcc }}
 
@@ -190,7 +190,7 @@ jobs:
       if: ${{ contains(matrix.os, 'ubuntu') }}
       run: |
         sudo update-alternatives \
-          --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 140 \
+          --install /usr/bin/gcc gcc /usr/bin/gcc-${{ matrix.gcc }} 100 \
           --slave /usr/bin/gfortran gfortran /usr/bin/gfortran-${{ matrix.gcc }} \
           --slave /usr/bin/gcov gcov /usr/bin/gcov-${{ matrix.gcc }}
 
